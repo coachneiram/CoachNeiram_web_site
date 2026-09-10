@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://coach-neiram.netlify.app/</loc>
+    <loc>https://coachneiram.github.io/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://coach-neiram.netlify.app/mentions-legales.html</loc>
+    <loc>https://coachneiram.github.io/mentions-legales.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://coach-neiram.netlify.app/confidentialite.html</loc>
+    <loc>https://coachneiram.github.io/confidentialite.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>

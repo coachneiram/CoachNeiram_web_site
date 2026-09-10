@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://coach-neiram.netlify.app/sitemap.xml
+Sitemap: https://coachneiram.github.io/sitemap.xml
