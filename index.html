@@ -108,7 +108,7 @@
     "itemListElement": [
       { "@type": "Offer", "name": "Suivi Hebdomadaire — présentiel", "price": "220", "priceCurrency": "EUR", "description": "À partir de 220€/mois en engagement 12 mois. 1 séance individuelle par semaine, programme, suivi nutritionnel et ajustements hebdomadaires." },
       { "@type": "Offer", "name": "Suivi Mensuel — présentiel", "price": "210", "priceCurrency": "EUR", "description": "210€/mois. 1 séance individuelle par mois, programme en autonomie et recommandations alimentaires." },
-      { "@type": "Offer", "name": "Coaching en ligne", "price": "130", "priceCurrency": "EUR", "description": "130€/mois. Séances visio, programme personnalisé actualisé, suivi nutritionnel et correction technique par vidéo." },
+      { "@type": "Offer", "name": "Coaching en ligne", "price": "150", "priceCurrency": "EUR", "description": "150€/mois. Séances visio, programme personnalisé actualisé, suivi nutritionnel et correction technique par vidéo." },
       { "@type": "Offer", "name": "Consultation Experte", "price": "80", "priceCurrency": "EUR", "description": "80€ la consultation d'1h en visio ou par téléphone, sans engagement." }
     ]
   }
@@ -342,7 +342,7 @@
             <li>Suivi nutritionnel personnalisé</li>
             <li>Correction technique par vidéo, retour sous 48h</li>
           </ul>
-          <p class="service__price" style="margin-top:2rem">130€ <small>/ mois</small></p>
+          <p class="service__price" style="margin-top:2rem">150€ <small>/ mois</small></p>
         </div>
         <a class="btn btn--ghost btn--block" href="#contact">Demander cette formule</a>
       </article>
@@ -1035,8 +1035,10 @@
       </p>
     </header>
 
-    <form method="POST" name="demande-coaching" action="merci.html" data-netlify="true" data-netlify-honeypot="bot-field" data-reveal>
+    <form method="POST" name="demande-coaching" action="https://formsubmit.co/pelissier.marien@gmail.com" data-netlify-honeypot="bot-field" data-reveal>
       <input type="hidden" name="form-name" value="demande-coaching">
+      <input type="hidden" name="_subject" value="Nouvelle demande de coaching - Site Coach Neiram">
+      <input type="hidden" name="_next" value="https://coachneiram.github.io/merci.html">
       <p style="display:none"><label>Ne pas remplir : <input name="bot-field"></label></p>
 
       <div class="form-grid">
