@@ -1,0 +1,730 @@
+/* =========================================================
+   COACH NEIRAM — Composants
+   ========================================================= */
+
+/* ---------- Boutons ----------
+   Le jaune est réservé au CTA principal. Un seul par écran :
+   c'est ce qui lui garde sa force. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 1rem 1.75rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--dur-base) var(--ease-out),
+              color var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+  will-change: transform;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn__arrow {
+  transition: transform var(--dur-base) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.btn:hover .btn__arrow,
+.btn:focus-visible .btn__arrow { transform: translateX(4px); }
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible { background: var(--accent-hover); }
+
+.btn--ghost {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn--solid {
+  background: var(--text);
+  color: var(--text-invert);
+}
+
+.btn--solid:hover,
+.btn--solid:focus-visible { background: var(--accent); color: var(--on-accent); }
+
+.btn--sm { padding: 0.7rem 1.2rem; font-size: var(--fs-xs); }
+.btn--block { display: flex; width: 100%; justify-content: center; }
+
+/* Lien texte avec soulignement animé */
+.link-under {
+  position: relative;
+  font-weight: 500;
+  color: var(--accent);
+  padding-bottom: 2px;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur-base) var(--ease-out);
+}
+
+.link-under:hover,
+.link-under:focus-visible { background-size: 0% 1px; }
+
+/* ---------- Badge / pastille ---------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.35rem 0.75rem;
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  color: var(--text-muted);
+}
+
+.badge--accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.badge--solid {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+/* ---------- Bandeau de preuve ---------- */
+
+.proof {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border-block: 1px solid var(--line);
+}
+
+@media (min-width: 800px) {
+  .proof { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+.proof__item {
+  background: var(--bg);
+  padding: clamp(1.5rem, 3vw, 2.5rem) var(--sp-4);
+  text-align: center;
+  display: grid;
+  gap: var(--sp-2);
+  align-content: center;
+}
+
+.proof__value {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.proof__value em { font-style: normal; color: var(--accent); }
+
+.proof__label {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ---------- Carte service ----------
+   Grandes cartes visuelles, beaucoup d'air, pas un catalogue. */
+
+.service {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--sp-5);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--dur-base) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+}
+
+.service:hover { border-color: var(--line-strong); transform: translateY(-4px); }
+
+/* Le filet jaune qui se déploie en haut de carte au survol. */
+.service::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.service:hover::before { transform: scaleX(1); }
+
+.service__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.service__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.service__title { font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+
+.service__desc { color: var(--text-muted); font-size: var(--fs-sm); }
+
+.service__media { margin-block: var(--sp-2); }
+
+.service__list { display: grid; gap: var(--sp-3); margin-top: var(--sp-4); }
+
+.service__list li {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: var(--sp-3);
+  font-size: var(--fs-sm);
+  color: var(--grey-300);
+  line-height: 1.5;
+}
+
+/* Coche dessinée en CSS : pas d'icône à charger. */
+.service__list li::before {
+  content: "";
+  width: 9px;
+  height: 5px;
+  margin-top: 0.55em;
+  border-left: 1.5px solid var(--accent);
+  border-bottom: 1.5px solid var(--accent);
+  transform: rotate(-45deg);
+}
+
+.service__price {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  line-height: 1;
+  color: var(--text);
+}
+
+.service__price small {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-faint);
+}
+
+/* ---------- Tableau de tarifs par durée ---------- */
+
+.tiers {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--sp-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.tiers th {
+  text-align: left;
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.tiers td {
+  padding-block: var(--sp-3);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-sm);
+  color: var(--grey-300);
+}
+
+.tiers tr:last-child td { border-bottom: 0; }
+
+.tiers td:last-child {
+  text-align: right;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--text);
+}
+
+/* La durée la plus engageante est mise en avant, sans crier. */
+.tiers tr[data-best] td { color: var(--text); }
+.tiers tr[data-best] td:last-child { color: var(--accent); }
+
+/* ---------- Étapes / piliers de méthode ---------- */
+
+.pillar {
+  position: relative;
+  display: grid;
+  gap: var(--sp-4);
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 900px) {
+  .pillar { grid-template-columns: 140px minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: var(--sp-7); }
+}
+
+.pillar__num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line-strong);
+  transition: color var(--dur-slow) var(--ease-out),
+              -webkit-text-stroke-color var(--dur-slow) var(--ease-out);
+}
+
+/* Le chiffre se remplit de jaune quand l'étape entre dans le viewport. */
+.pillar.is-active .pillar__num {
+  color: var(--accent);
+  -webkit-text-stroke-color: transparent;
+}
+
+.pillar__title { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+.pillar__desc { color: var(--text-muted); font-size: var(--fs-md); }
+
+/* Barre de progression verticale de la méthode */
+.method-track {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.method-track__fill {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0%;
+  background: var(--accent);
+}
+
+/* ---------- Profils "tu te reconnais ?" ---------- */
+
+.profiles {
+  display: grid;
+  gap: var(--sp-6);
+}
+
+@media (min-width: 1000px) {
+  .profiles { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: center; }
+}
+
+.profiles__list { display: grid; }
+
+.profile {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--sp-4);
+  padding-block: clamp(1.1rem, 2.4vw, 1.7rem);
+  border-bottom: 1px solid var(--line);
+  cursor: default;
+  transition: padding-left var(--dur-base) var(--ease-out);
+}
+
+.profile:first-child { border-top: 1px solid var(--line); }
+
+.profile__index {
+  font-size: var(--fs-label);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.profile__text {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.6vw, 1.85rem);
+  text-transform: uppercase;
+  line-height: 1.12;
+  color: var(--text-muted);
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.profile__go {
+  opacity: 0;
+  transform: translateX(-6px);
+  color: var(--accent);
+  transition: opacity var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+
+.profile.is-active {
+  padding-left: var(--sp-4);
+}
+
+.profile.is-active .profile__text { color: var(--text); }
+.profile.is-active .profile__index { color: var(--accent); }
+.profile.is-active .profile__go { opacity: 1; transform: translateX(0); }
+
+/* La colonne image qui répond au survol des profils */
+.profiles__viewer {
+  position: relative;
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .profiles__viewer { display: block; }
+}
+
+.profiles__viewer .media {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+
+.profiles__viewer .media.is-showing { opacity: 1; }
+
+.profiles__frame { position: relative; aspect-ratio: 4 / 5; }
+
+/* ---------- Citations / avis ---------- */
+
+.quote {
+  display: grid;
+  gap: var(--sp-5);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  height: 100%;
+  align-content: start;
+  transition: border-color var(--dur-base) var(--ease-out);
+}
+
+.quote:hover { border-color: var(--line-strong); }
+
+.quote__stars {
+  color: var(--accent);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.15em;
+}
+
+.quote__text {
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  color: var(--grey-300);
+}
+
+.quote__author {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  font-weight: 500;
+  margin-top: auto;
+}
+
+.quote__source {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+/* Rail horizontal des avis */
+.rail {
+  display: flex;
+  gap: var(--sp-5);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--sp-4);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+  /* On déborde volontairement de la gouttière pour un effet de rail. */
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+}
+
+.rail > * {
+  flex: 0 0 min(88vw, 420px);
+  scroll-snap-align: start;
+}
+
+.rail::-webkit-scrollbar { height: 4px; }
+.rail::-webkit-scrollbar-track { background: var(--line); }
+.rail::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: var(--radius-pill); }
+
+/* ---------- Programmes téléchargeables ---------- */
+
+.program {
+  display: grid;
+  gap: var(--sp-4);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--dur-base) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+}
+
+.program:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+.program__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-top: var(--sp-2);
+}
+
+.program__price {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Formulaire ---------- */
+
+.form-grid {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+@media (min-width: 700px) {
+  .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .form-field--full { grid-column: 1 / -1; }
+}
+
+.form-field { display: grid; gap: var(--sp-2); }
+
+.form-field label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: var(--ink-900);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: var(--fs-base);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out);
+}
+
+.form-field textarea { resize: vertical; min-height: 130px; }
+
+.form-field input:hover,
+.form-field select:hover,
+.form-field textarea:hover { border-color: var(--line-strong); }
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--ink-800);
+}
+
+.form-field input:focus-visible,
+.form-field select:focus-visible,
+.form-field textarea:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.form-field select {
+  appearance: none;
+  /* Chevron dessiné en gradient : aucune ressource externe. */
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--grey-500) 50%),
+    linear-gradient(135deg, var(--grey-500) 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(50% + 2px), calc(100% - 14px) calc(50% + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.75rem;
+}
+
+.form-note {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  margin-top: var(--sp-4);
+}
+
+/* ---------- Encadré d'information ---------- */
+
+.callout {
+  display: grid;
+  gap: var(--sp-3);
+  padding: var(--sp-5);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: var(--bg-raised);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.callout strong { color: var(--text); font-weight: 600; }
+
+/* =========================================================
+   BANNIÈRE DE CONSENTEMENT
+   -----------------------------------------------------------------
+   Exigences CNIL respectées ici :
+   - aucun cookie de mesure n'est déposé avant un choix explicite ;
+   - refuser demande exactement le même effort qu'accepter (même
+     taille, même niveau de contraste, côte à côte) ;
+   - le choix est réversible à tout moment depuis le pied de page.
+   ========================================================= */
+
+.consent {
+  position: fixed;
+  left: var(--sp-4);
+  right: var(--sp-4);
+  bottom: var(--sp-4);
+  z-index: var(--z-overlay);
+  max-width: 520px;
+  display: grid;
+  gap: var(--sp-4);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  background: rgba(13, 13, 13, 0.97);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lift);
+  /* Masquée par défaut : elle n'apparaît que si aucun choix n'est enregistré,
+     et c'est le JS qui la révèle. Sans JS, aucun script de mesure n'est
+     chargé non plus — donc rien à consentir. */
+  transform: translateY(calc(100% + var(--sp-6)));
+  opacity: 0;
+  visibility: hidden;
+  transition: transform var(--dur-slow) var(--ease-cine),
+              opacity var(--dur-base) var(--ease-out),
+              visibility 0s linear var(--dur-slow);
+}
+
+.consent.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* Sur grand écran, la bannière se cale à DROITE : le contenu du hero et son
+   CTA principal sont alignés à gauche, et rien ne doit les recouvrir à
+   l'arrivée sur le site. */
+@media (min-width: 700px) {
+  .consent { right: var(--sp-6); bottom: var(--sp-6); left: auto; }
+}
+
+/* Sur mobile, la bannière doit passer au-dessus du CTA fixe. */
+@media (max-width: 799px) {
+  .consent { bottom: 84px; }
+}
+
+.consent__title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.consent__text {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.consent__text a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.consent__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+/* Les deux boutons ont volontairement le même poids visuel :
+   un refus grisé ou relégué en lien texte ne serait pas conforme. */
+.consent__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  transition: background-color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+
+.consent__btn:hover,
+.consent__btn:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.consent__btn--accept:hover,
+.consent__btn--accept:focus-visible {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+/* Lien de réouverture dans le pied de page */
+.consent-reopen {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: var(--fs-sm);
+  color: var(--grey-300);
+  cursor: pointer;
+  text-align: left;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.consent-reopen:hover,
+.consent-reopen:focus-visible { color: var(--accent); }

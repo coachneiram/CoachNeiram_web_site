@@ -1,0 +1,335 @@
+/* =========================================================
+   COACH NEIRAM — Sections singulières
+   ========================================================= */
+
+/* ---------- HERO ----------
+   La photo est le sujet. Le design ne fait que la cadrer. */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  background: var(--ink-900);
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__media .media {
+  height: 100%;
+  border-radius: 0;
+  /* Valeurs de départ explicites : GSAP ne peut animer une variable
+     que s'il peut d'abord en lire la valeur courante. */
+  --hero-shift: 0%;
+  --hero-zoom: 1.06;
+}
+
+/* L'image déborde en hauteur pour laisser courir le parallax
+   sans jamais découvrir de bord. */
+.hero__media .media > img {
+  height: 118%;
+  transform: translateY(var(--hero-shift, 0)) scale(var(--hero-zoom, 1.06));
+  transform-origin: center 40%;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: var(--gutter);
+  padding-bottom: clamp(5rem, 12vh, 9rem);
+  padding-top: clamp(7rem, 16vh, 11rem);
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-5);
+}
+
+.hero__title {
+  font-size: var(--fs-mega);
+  max-width: 19ch;
+  margin-bottom: var(--sp-5);
+}
+
+/* Chaque ligne du titre vit dans un masque : le texte monte
+   depuis le bas au chargement, sans jamais déborder. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.line-mask > span {
+  display: block;
+  will-change: transform;
+}
+
+.hero__title .accent-line { color: var(--accent); }
+
+.hero__lead {
+  font-size: var(--fs-md);
+  color: var(--grey-300);
+  max-width: 46ch;
+  line-height: 1.65;
+  margin-bottom: var(--sp-6);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+
+.hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: var(--sp-5);
+  z-index: 3;
+  transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--grey-400);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.hero__scroll:hover,
+.hero__scroll:focus-visible { color: var(--accent); }
+
+@media (max-width: 640px) {
+  /* Sur mobile le CTA occupe déjà le bas d'écran : on retire l'indicateur. */
+  .hero__scroll { display: none; }
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 46px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scroll-pulse 2.4s var(--ease-inout) infinite;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { transform: scaleY(0.35); transform-origin: top; opacity: 0.5; }
+  50%      { transform: scaleY(1);    transform-origin: top; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-line { animation: none; opacity: 1; }
+}
+
+/* ---------- TRANSFORMATION — séquence sticky ----------
+   Le titre reste fixé pendant que les 4 étapes défilent à côté. */
+
+.sticky-seq { position: relative; }
+
+@media (min-width: 1000px) {
+  .sticky-seq {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+
+  .sticky-seq__pin {
+    position: sticky;
+    top: 18vh;
+    align-self: start;
+  }
+}
+
+.sticky-seq__steps { display: grid; }
+
+/* Le titre de la colonne fixe vit dans un espace contraint :
+   il lui faut sa propre échelle, plus courte que celle des sections pleine largeur. */
+.sticky-seq__pin h2 { font-size: clamp(2.1rem, 4.4vw, 3.5rem); }
+
+.step {
+  display: grid;
+  gap: var(--sp-4);
+  padding-block: clamp(2rem, 6vw, 4rem);
+  border-bottom: 1px solid var(--line);
+  opacity: 0.45;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+
+.step.is-active { opacity: 1; }
+
+.step__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-4);
+}
+
+.step__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.step__title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.step__desc { color: var(--text-muted); font-size: var(--fs-sm); max-width: 46ch; }
+
+/* Compteur de progression de la séquence */
+.seq-count {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1;
+  color: var(--line-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+.seq-count em { font-style: normal; color: var(--accent); }
+
+/* ---------- GALERIE — rail horizontal piloté au scroll ---------- */
+
+.gallery { position: relative; overflow: hidden; }
+
+.gallery__track {
+  display: flex;
+  gap: clamp(1rem, 2vw, 2rem);
+  will-change: transform;
+}
+
+.gallery__item {
+  flex: 0 0 clamp(260px, 34vw, 460px);
+}
+
+.gallery__item:nth-child(odd) { align-self: flex-start; }
+.gallery__item:nth-child(even) { align-self: flex-end; }
+
+.gallery__caption {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* Sous 1000px, le rail devient un défilement tactile classique :
+   plus fiable et plus rapide qu'un scroll horizontal simulé. */
+@media (max-width: 999px) {
+  .gallery__track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-inline: var(--gutter);
+    padding-bottom: var(--sp-4);
+    transform: none !important;
+  }
+  .gallery__item { scroll-snap-align: center; align-self: auto; }
+}
+
+/* ---------- RÉSULTATS ---------- */
+
+.results__grid { display: grid; gap: var(--sp-6); }
+
+@media (min-width: 800px) {
+  .results__grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+}
+
+.result-card { display: grid; gap: var(--sp-4); }
+
+.result-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+/* ---------- CTA FINAL ---------- */
+
+.finale {
+  position: relative;
+  min-height: 88svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow: hidden;
+  background: var(--ink-900);
+}
+
+.finale__media { position: absolute; inset: 0; z-index: 0; }
+.finale__media .media { height: 100%; border-radius: 0; }
+.finale__media .media > img { height: 112%; }
+
+.finale__inner {
+  position: relative;
+  z-index: 2;
+  padding: var(--section-y) var(--gutter);
+  display: grid;
+  gap: var(--sp-5);
+  justify-items: center;
+  max-width: 900px;
+}
+
+.finale__title { font-size: var(--fs-xxl); }
+
+.finale__lead {
+  color: var(--grey-300);
+  font-size: var(--fs-md);
+  max-width: 38ch;
+  line-height: 1.6;
+}
+
+.finale__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  justify-content: center;
+  margin-top: var(--sp-3);
+}
+
+/* Halo lent derrière le CTA : la seule lueur du site, très basse
+   en opacité, pour attirer l'œil sans éclairer la page. */
+.finale__glow {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  width: min(120vw, 900px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 213, 0, 0.13) 0%, transparent 62%);
+  pointer-events: none;
+  animation: glow-breathe 9s var(--ease-inout) infinite;
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.92); }
+  50%      { opacity: 1;    transform: translate(-50%, -50%) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finale__glow { animation: none; opacity: 0.7; }
+}
+
+/* ---------- Révélations au scroll (état initial) ---------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  will-change: transform, opacity;
+}
+
+[data-reveal-lines] .line-mask > span { opacity: 0; transform: translateY(105%); }

@@ -1,0 +1,136 @@
+/* =========================================================
+   COACH NEIRAM — Design tokens
+   Trois couches : primitives -> sémantique -> composants.
+   Le jaune #FFD500 est repris du site existant (continuité de marque).
+   ========================================================= */
+
+:root {
+  /* ---------- 1. PRIMITIVES ---------- */
+
+  /* Noirs : surfaces principales. Jamais de #000 pur, trop dur en grand aplat. */
+  --ink-900: #070707;
+  --ink-800: #0d0d0d;   /* noir de référence du site actuel */
+  --ink-700: #131313;
+  --ink-600: #1a1a1a;
+  --ink-500: #232323;
+
+  /* Blancs et gris */
+  --paper-000: #ffffff;
+  --paper-100: #f4f4f2;
+  --grey-300: #dcdcdc;
+  --grey-400: #b4b4b4;
+  --grey-500: #8e8e8e;
+  --grey-600: #6a6a6a;
+
+  /* Accent — usage strictement réservé aux CTA, hovers et micro-détails */
+  --yellow-500: #ffd500;
+  --yellow-600: #e8c200;
+  --yellow-300: #ffe560;
+
+  /* ---------- 2. SÉMANTIQUE ---------- */
+
+  --bg: var(--ink-800);
+  --bg-raised: var(--ink-600);
+  --bg-sunken: var(--ink-900);
+  --bg-invert: var(--paper-100);
+
+  --text: var(--paper-000);
+  --text-muted: var(--grey-400);
+  --text-faint: var(--grey-500);
+  --text-invert: var(--ink-800);
+
+  --accent: var(--yellow-500);
+  --accent-hover: var(--yellow-300);
+  --on-accent: var(--ink-900);
+
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.22);
+  --line-invert: rgba(13, 13, 13, 0.12);
+
+  --focus: var(--yellow-500);
+
+  /* ---------- 3. TYPOGRAPHIE ---------- */
+
+  --font-display: "Barlow Condensed", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  /* Échelle fluide : min lisible sur 360px, max maîtrisé sur grand écran */
+  --fs-mega: clamp(2.9rem, 8.5vw, 7.2rem);
+  --fs-xxl: clamp(2.2rem, 6.2vw, 5rem);
+  --fs-xl: clamp(1.9rem, 4.2vw, 3.4rem);
+  --fs-lg: clamp(1.5rem, 2.6vw, 2.2rem);
+  --fs-md: clamp(1.05rem, 1.4vw, 1.25rem);
+  --fs-base: 1rem;
+  --fs-sm: 0.9375rem;
+  --fs-xs: 0.8125rem;
+  --fs-label: 0.75rem;
+
+  --lh-tight: 0.92;
+  --lh-snug: 1.1;
+  --lh-normal: 1.55;
+  --lh-loose: 1.7;
+
+  --tracking-label: 0.18em;
+  --tracking-display: -0.02em;
+
+  /* ---------- 4. ESPACEMENT ---------- */
+
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+
+  /* Respiration verticale entre sections — le luxe, c'est le vide */
+  --section-y: clamp(5rem, 12vw, 11rem);
+  --gutter: clamp(1.25rem, 5vw, 4.5rem);
+  --maxw: 1440px;
+  --maxw-text: 62ch;
+
+  /* ---------- 5. FORME ET MATIÈRE ---------- */
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
+  --shadow-lift: 0 30px 80px -30px rgba(0, 0, 0, 0.85);
+
+  /* ---------- 6. MOUVEMENT ---------- */
+
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 620ms;
+  --dur-cine: 1200ms;
+
+  /* Courbes lentes et tenues : le mouvement premium ne rebondit pas */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---------- 7. COUCHES ---------- */
+
+  --z-base: 1;
+  --z-sticky: 50;
+  --z-nav: 100;
+  --z-mobile-cta: 90;
+  --z-overlay: 200;
+}
+
+/* Sections claires : on inverse la sémantique sans réécrire les composants. */
+.theme-light {
+  --bg: var(--paper-100);
+  --bg-raised: var(--paper-000);
+  --bg-sunken: #e9e9e6;
+  --text: var(--ink-800);
+  --text-muted: var(--grey-600);
+  --text-faint: var(--grey-500);
+  --line: rgba(13, 13, 13, 0.12);
+  --line-strong: rgba(13, 13, 13, 0.28);
+}

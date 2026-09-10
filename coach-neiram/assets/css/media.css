@@ -1,0 +1,194 @@
+/* =========================================================
+   COACH NEIRAM — Système photographique
+   -----------------------------------------------------------------
+   Le site n'a pas encore de photos. Chaque emplacement est donc conçu
+   pour deux états :
+     1. VIDE  — un cadre éditorial assumé, qui ne ressemble pas à une
+                image cassée et qui tient visuellement tout seul.
+     2. REMPLI — la photo prend toute la place et devient le sujet.
+   Déposer un fichier au chemin indiqué suffit : aucun code à modifier.
+   Voir assets/img/README.md pour la liste des fichiers attendus.
+   ========================================================= */
+
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-700);
+  border-radius: var(--radius-md);
+  isolation: isolate;
+}
+
+.media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--media-pos, center);
+  /* Léger sur-dimensionnement : laisse de la marge au parallax
+     pour bouger sans révéler de bord vide. */
+  transform: scale(var(--media-scale, 1));
+  transition: transform var(--dur-cine) var(--ease-cine);
+}
+
+/* ---------- Ratios ---------- */
+
+.media--hero      { aspect-ratio: 16 / 9; }
+.media--portrait  { aspect-ratio: 4 / 5; }
+.media--square    { aspect-ratio: 1 / 1; }
+.media--tall      { aspect-ratio: 3 / 4; }
+.media--wide      { aspect-ratio: 3 / 2; }
+.media--pano      { aspect-ratio: 21 / 9; }
+.media--comp      { aspect-ratio: 6 / 7; }
+
+/* Couvertures de produit : ce sont des visuels composés, avec de la
+   typographie jusqu'aux bords. Les recadrer couperait leur mise en page,
+   on les affiche donc entières, centrées dans un cadre de hauteur fixe. */
+.media--cover { aspect-ratio: 4 / 3; background: var(--ink-800); }
+.media--cover > img { object-fit: contain; transform: none; }
+.media--fill      { aspect-ratio: auto; height: 100%; }
+
+/* ---------- Voile de lisibilité ----------
+   Sur les photos qui portent du texte, on assombrit par le bas
+   pour garantir le contraste quelle que soit l'image déposée. */
+
+.media--scrim::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(7, 7, 7, 0.92) 0%,
+    rgba(7, 7, 7, 0.55) 35%,
+    rgba(7, 7, 7, 0.15) 65%,
+    rgba(7, 7, 7, 0.35) 100%
+  );
+  pointer-events: none;
+}
+
+/* ---------- État VIDE ----------
+   Déclenché par JS uniquement après un échec de chargement avéré
+   (voir le commentaire d'en-tête de media.js : appliquer cet état par
+   défaut empêcherait le chargement des images en lazy loading).
+   Le cadre reste beau : matière sombre, trame fine, accent jaune discret. */
+
+.media.is-empty > img { display: none; }
+
+/* Le texte alternatif d'une image absente ne doit pas s'afficher en clair
+   par-dessus le cadre pendant le court instant qui précède l'erreur. */
+.media > img { color: transparent; font-size: 0; }
+
+.media.is-empty {
+  background:
+    /* trame diagonale très fine, à peine perceptible */
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.022) 0 1px,
+      transparent 1px 11px
+    ),
+    radial-gradient(
+      120% 90% at 50% 0%,
+      rgba(255, 213, 0, 0.05) 0%,
+      transparent 60%
+    ),
+    linear-gradient(160deg, var(--ink-600) 0%, var(--ink-900) 100%);
+  border: 1px solid var(--line);
+}
+
+.media__slot {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  padding: var(--sp-5);
+  text-align: center;
+}
+
+.media.is-empty .media__slot { display: flex; }
+
+/* Petit cadre d'angle jaune : signale un emplacement photo,
+   pas une erreur. */
+.media__slot::before {
+  content: "";
+  width: 34px;
+  height: 26px;
+  border: 1.5px solid var(--accent);
+  border-radius: 2px;
+  opacity: 0.85;
+  background:
+    radial-gradient(circle at 68% 34%, var(--accent) 0 2.5px, transparent 2.6px),
+    linear-gradient(to top, rgba(255, 213, 0, 0.22) 0 38%, transparent 38%);
+}
+
+.media__slot-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  line-height: 1.2;
+  color: var(--grey-300);
+  max-width: 26ch;
+}
+
+.media__slot-meta {
+  font-size: var(--fs-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  /* grey-600 tombait à 3,7:1 sur ce fond — sous le seuil AA de 4,5:1. */
+  color: var(--grey-500);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sur les grandes images plein cadre, le texte du titre occupe la gauche
+   et le bas : on repousse le cartouche en haut à droite pour qu'il ne
+   percute jamais le contenu éditorial. */
+.media--slot-corner .media__slot {
+  inset: auto 0 auto auto;
+  top: 12%;
+  right: 4%;
+  align-items: flex-end;
+  text-align: right;
+  padding: 0;
+  max-width: min(38ch, 42vw);
+  opacity: 0.75;
+}
+
+@media (max-width: 900px) {
+  /* Sur petit écran, la place manque pour un libellé : on ne garde que le
+     pictogramme, calé sous la barre de navigation. Les chemins de fichiers
+     restent documentés dans assets/img/README.md. */
+  .media--slot-corner .media__slot {
+    inset: 92px var(--sp-4) auto auto;
+    max-width: none;
+    opacity: 0.55;
+  }
+  .media--slot-corner .media__slot-title,
+  .media--slot-corner .media__slot-meta { display: none; }
+}
+
+/* Sur les très petits emplacements, on n'affiche que la pastille. */
+.media--compact .media__slot-title,
+.media--compact .media__slot-meta { display: none; }
+
+/* ---------- Interactions ---------- */
+
+/* Zoom lent au survol — uniquement là où c'est signifiant. */
+.media--zoom:hover > img,
+.media--zoom:focus-within > img { transform: scale(calc(var(--media-scale, 1) * 1.06)); }
+
+/* Révélation par clip-path, pilotée au scroll par GSAP. */
+[data-reveal-media] {
+  clip-path: inset(0 0 100% 0);
+  will-change: clip-path;
+}
+
+/* Distorsion très légère au survol : un cisaillement de 0.4deg suffit
+   à donner de la matière sans virer à l'effet gadget. */
+.media--warp > img { transition: transform var(--dur-slow) var(--ease-cine), filter var(--dur-slow) var(--ease-cine); }
+.media--warp:hover > img {
+  transform: scale(calc(var(--media-scale, 1) * 1.05)) skewY(-0.4deg);
+  filter: saturate(1.08) contrast(1.04);
+}

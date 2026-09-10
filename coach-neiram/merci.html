@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demande envoyée — Coach Neiram</title>
+<meta name="description" content="Ta demande de coaching a bien été envoyée. Réponse sous 48h.">
+<meta name="robots" content="noindex, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<style>
+  .merci {
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: var(--gutter);
+    position: relative;
+    overflow: hidden;
+  }
+  .merci__inner { display: grid; gap: var(--sp-5); justify-items: center; max-width: 620px; position: relative; z-index: 2; }
+  .merci__title { font-size: var(--fs-xxl); }
+  .merci__lead { color: var(--text-muted); font-size: var(--fs-md); line-height: 1.65; max-width: 46ch; }
+  .merci__actions { display: flex; flex-wrap: wrap; gap: var(--sp-4); justify-content: center; margin-top: var(--sp-3); }
+  .merci__contact { margin-top: var(--sp-6); font-size: var(--fs-sm); color: var(--text-faint); display: grid; gap: var(--sp-2); }
+  .merci__contact a { color: var(--accent); }
+  /* La coche se dessine à l'arrivée : une seule animation, courte, qui
+     confirme visuellement que c'est parti. */
+  .merci__check { width: 64px; height: 64px; border: 2px solid var(--accent); border-radius: 50%; display: grid; place-items: center; }
+  .merci__check svg { width: 28px; height: 28px; }
+  .merci__check path { stroke-dasharray: 32; stroke-dashoffset: 32; animation: trace .7s var(--ease-out) .15s forwards; }
+  @keyframes trace { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .merci__check path { animation: none; stroke-dashoffset: 0; } }
+  .merci__glow {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: radial-gradient(circle at 50% 45%, rgba(255,213,0,.10) 0%, transparent 60%);
+  }
+</style>
+</head>
+<body>
+<main class="merci">
+  <div class="merci__glow" aria-hidden="true"></div>
+  <div class="merci__inner">
+    <span class="merci__check" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+
+    <p class="label label--accent">Demande envoyée</p>
+    <h1 class="merci__title">C'est noté.<br>À très vite.</h1>
+    <p class="merci__lead">
+      Ta demande est bien arrivée. Je la lis personnellement et je te réponds
+      sous 48h pour caler notre premier échange.
+    </p>
+
+    <div class="merci__actions">
+      <a class="btn btn--primary" href="index.html">
+        Retour à l'accueil
+        <svg class="btn__arrow" width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M9 1l4 4-4 4M13 5H1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn btn--ghost" href="https://instagram.com/coachneiram" target="_blank" rel="noopener">Me suivre sur Instagram</a>
+    </div>
+
+    <div class="merci__contact">
+      <span>Une question d'ici là ?</span>
+      <a href="tel:+33675359069">06 75 35 90 69</a>
+      <a href="mailto:coachingbymarien@gmail.com">coachingbymarien@gmail.com</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>
